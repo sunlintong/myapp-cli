@@ -11,9 +11,8 @@ import (
 )
 
 const (
-	address     = "localhost:50051"
+	address     = "192.168.34.72:50051"
 )
-
 
 func main() {
 
@@ -30,8 +29,11 @@ func main() {
 	go func(){
 		for true{	
 		   echoreply,_ := stream.Recv()
-		   fmt.Println(echoreply.Output)
-		   if 	echoreply.GetNowtime() != ""{
+		   if echoreply.Output != ""{
+			fmt.Println(echoreply.Output)
+		   }
+		   
+		   if 	echoreply.Nowtime != ""{
 			   fmt.Println(echoreply)
 		   }
 	    }
@@ -41,6 +43,7 @@ func main() {
 		//发送echo请求流
 		var input string
 		fmt.Scanln(&input)
+
 		echorequest := &pb.EchoRequest{}
 		echorequest.Input=input
 		stream.Send(echorequest)
